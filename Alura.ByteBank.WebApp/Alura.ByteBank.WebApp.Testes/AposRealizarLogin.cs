@@ -3,20 +3,22 @@ using OpenQA.Selenium;
 using System.Reflection;
 using Xunit.Abstractions;
 using Alura.ByteBank.WebApp.Testes.PageObjects;
+using Alura.ByteBank.WebApp.Testes.Util;
 
 
-//https://github.com/alura-cursos/Alura.ByteBank.WebApp/tree/aula05/Alura.ByteBank.WebApp.Testes
+//https://github.com/alura-cursos/Alura.ByteBank.WebApp/tree/master/Alura.ByteBank.WebApp.Testes
 namespace Alura.ByteBank.WebApp.Testes
 {
-    public class AposRealizarLogin
+    public class AposRealizarLogin : IClassFixture<Fixture>
     {
         private IWebDriver driver;
         public ITestOutputHelper SaidaConsoleTeste;
 
-        public AposRealizarLogin(ITestOutputHelper _saidaConsoleTeste)
+        public AposRealizarLogin(
+            Fixture fixture,
+            ITestOutputHelper _saidaConsoleTeste)
         {
-            driver = new ChromeDriver(Path.GetDirectoryName(
-            Assembly.GetExecutingAssembly().Location));
+            driver = fixture.Driver;
             SaidaConsoleTeste = _saidaConsoleTeste;
         }
 
