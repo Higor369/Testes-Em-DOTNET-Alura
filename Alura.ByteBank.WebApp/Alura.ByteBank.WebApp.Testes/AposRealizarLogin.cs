@@ -2,7 +2,10 @@
 using OpenQA.Selenium;
 using System.Reflection;
 using Xunit.Abstractions;
+using Alura.ByteBank.WebApp.Testes.PageObjects;
 
+
+//https://github.com/alura-cursos/Alura.ByteBank.WebApp/tree/aula05/Alura.ByteBank.WebApp.Testes
 namespace Alura.ByteBank.WebApp.Testes
 {
     public class AposRealizarLogin
@@ -33,6 +36,38 @@ namespace Alura.ByteBank.WebApp.Testes
 
             //Assert
             Assert.Contains("Agência", driver.PageSource);
+        }
+
+        [Fact]
+        public void AposRealizarLoginVerificaSeExisteOpcaoAgenciaMenuUsandoPageObject()
+        {
+        
+            //Arrange
+            var loginPO = new LoginPO(driver);
+            loginPO.Navegar("https://localhost:44309/UsuarioApps/Login");
+
+            //Act
+            loginPO.PreencherCampos("andre@email.com", "senha01");
+            loginPO.Logar();
+
+            //Assert
+            Assert.Contains("Agência", driver.PageSource);
+        }
+
+        [Fact]
+        public void TentaRealizarLoginSemPreencherCamposUsandoPageObject()
+        {
+            //Arrange
+            var loginPO = new LoginPO(driver);
+            loginPO.Navegar("https://localhost:44309/UsuarioApps/Login");
+
+            //Act
+            loginPO.PreencherCampos("", "");
+            loginPO.Logar();
+
+            //Assert
+            Assert.Contains("The Email field is required.", driver.PageSource);
+            Assert.Contains("The Senha field is required.", driver.PageSource);
         }
 
         [Fact]
